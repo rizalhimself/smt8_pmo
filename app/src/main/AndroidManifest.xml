@@ -7,9 +7,9 @@
         android:allowBackup="true"
         android:dataExtractionRules="@xml/data_extraction_rules"
         android:fullBackupContent="@xml/backup_rules"
-        android:icon="@mipmap/ic_launcher"
+        android:icon="@drawable/splashscreen_mhs_24"
         android:label="@string/app_name"
-        android:roundIcon="@mipmap/ic_launcher_round"
+        android:roundIcon="@drawable/splashscreen_mhs_24"
         android:supportsRtl="true"
         android:theme="@style/Theme.PMO23Praktikum"
         tools:targetApi="31">
@@ -31,5 +31,8 @@
 
         </activity>
     </application>
+    <uses-permission android:name="android.permission.INTERNET">
+
+    </uses-permission>
 
 </manifest>
