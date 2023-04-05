@@ -1,24 +1,21 @@
 package com.example.pmo23_praktikum;
 
+import android.content.Intent;
 import android.os.Bundle;
-import android.view.ContextMenu;
-import android.view.View;
 import android.view.Menu;
+import android.view.View;
 import android.widget.ImageView;
 
-import com.google.android.material.snackbar.Snackbar;
-import com.google.android.material.navigation.NavigationView;
-
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.drawerlayout.widget.DrawerLayout;
 import androidx.navigation.NavController;
 import androidx.navigation.Navigation;
 import androidx.navigation.ui.AppBarConfiguration;
 import androidx.navigation.ui.NavigationUI;
-import androidx.drawerlayout.widget.DrawerLayout;
-import androidx.appcompat.app.AppCompatActivity;
-
-import com.squareup.picasso.Picasso;
 
 import com.example.pmo23_praktikum.databinding.ActivityMainBinding;
+import com.google.android.material.navigation.NavigationView;
+import com.squareup.picasso.Picasso;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -38,7 +35,7 @@ public class MainActivity extends AppCompatActivity {
         binding.appBarMain.fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG).setAction("Action", null).show();
+                startActivity(new Intent(MainActivity.this, crud_activity.class));
             }
         });
 

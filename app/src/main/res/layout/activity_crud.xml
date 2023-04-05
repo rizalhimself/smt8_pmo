@@ -1,0 +1,323 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    tools:context=".crud_activity">
+
+    <LinearLayout
+        android:id="@+id/Data"
+        android:layout_width="match_parent"
+        android:layout_height="40dp"
+        android:gravity="end"
+        android:orientation="horizontal">
+
+        <Button
+            android:id="@+id/showdata"
+            android:layout_width="30dp"
+            android:layout_height="25dp"
+            android:layout_marginTop="5dp"
+            android:layout_marginEnd="1pt"
+            android:background="@color/purple_700"
+            android:gravity="center_vertical" />
+
+        <TextView
+            android:layout_width="250dp"
+            android:layout_height="40dp"
+            android:layout_gravity="center"
+            android:layout_marginRight="20dp"
+            android:fontFamily="serif"
+            android:gravity="center"
+            android:text="Data Mahasiswa"
+            android:textSize="20dp" />
+
+        <ProgressBar
+            android:id="@+id/idProgress"
+            android:layout_width="35dp"
+            android:layout_height="35dp"
+            android:layout_gravity="center"
+            android:layout_marginStart="2pt"
+            android:layout_marginEnd="20dp"
+            android:backgroundTint="@color/white" />
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/List"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_below="@+id/Data"
+        android:layout_marginTop="10dp"
+        android:orientation="vertical">
+
+        <ScrollView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="15dp"
+                android:layout_marginTop="10dp"
+                android:layout_marginRight="15dp"
+                android:orientation="vertical">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="30dp"
+                    android:layout_margin="5dp"
+                    android:orientation="horizontal">
+
+                    <TextView
+                        android:layout_width="100dp"
+                        android:layout_height="wrap_content"
+                        android:text="NIM"
+                        android:textSize="15dp" />
+
+                    <EditText
+                        android:id="@+id/etNim"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:ems="10"
+                        android:hint="NIM"
+                        android:inputType="textPersonName"
+                        android:maxLength="8" />
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="30dp"
+                    android:layout_margin="5dp"
+                    android:orientation="horizontal">
+
+                    <TextView
+                        android:layout_width="100dp"
+                        android:layout_height="wrap_content"
+                        android:text="Nama"
+                        android:textSize="15dp" />
+
+                    <EditText
+                        android:id="@+id/etNama"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:ems="10"
+                        android:hint="Masukkan Nama"
+                        android:inputType="textPersonName" />
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="30dp"
+                    android:layout_margin="5dp"
+                    android:orientation="horizontal">
+
+                    <TextView
+                        android:layout_width="100dp"
+                        android:layout_height="wrap_content"
+                        android:text="Fakultas"
+                        android:textSize="15dp" />
+
+                    <Spinner
+                        android:id="@+id/fakultas"
+                        android:layout_width="match_parent"
+                        android:layout_height="30dp"
+                        android:entries="@array/list_fakultas" />
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="30dp"
+                    android:layout_margin="5dp"
+                    android:orientation="horizontal">
+
+                    <TextView
+                        android:layout_width="100dp"
+                        android:layout_height="wrap_content"
+                        android:text="Prodi"
+                        android:textSize="15dp" />
+
+                    <Spinner
+                        android:id="@+id/prodi"
+                        android:layout_width="match_parent"
+                        android:layout_height="30dp"
+                        android:entries="@array/list_prodi" />
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="30dp"
+                    android:layout_margin="5dp"
+                    android:orientation="horizontal">
+
+                    <TextView
+                        android:layout_width="100dp"
+                        android:layout_height="wrap_content"
+                        android:text="Golongan Darah"
+                        android:textSize="15dp" />
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="right"
+                    android:layout_marginRight="10dp"
+                    android:orientation="horizontal">
+
+                    <TextView
+                        android:id="@+id/hasil"
+                        android:layout_width="1dp"
+                        android:layout_height="1dp"
+                        android:text=""
+                        android:textSize="15sp" />
+
+                    <CheckBox
+                        android:id="@+id/cbGolA"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="5dp"
+                        android:layout_marginRight="20dp"
+                        android:text="A" />
+
+                    <CheckBox
+                        android:id="@+id/cbGolB"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="1dp"
+                        android:layout_marginRight="20dp"
+                        android:text="B" />
+
+                    <CheckBox
+                        android:id="@+id/cbGolAB"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="1dp"
+                        android:layout_marginRight="20dp"
+                        android:text="AB" />
+
+                    <CheckBox
+                        android:id="@+id/cbGolO"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="10dp"
+                        android:text="O" />
+
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="5dp"
+                    android:orientation="horizontal">
+
+                    <TextView
+                        android:layout_width="120dp"
+                        android:layout_height="wrap_content"
+                        android:text="Jenis Kelamin"
+                        android:textSize="15sp" />
+
+                    <RadioGroup
+                        android:id="@+id/rgJenisKelamin"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content">
+
+                        <RadioButton
+                            android:id="@+id/rbPria"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:checked="false"
+                            android:onClick="rbClick"
+                            android:text="Pria" />
+
+                        <RadioButton
+                            android:id="@+id/rbWanita"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:checked="false"
+                            android:onClick="rbClick"
+                            android:text="Wanita" />
+                    </RadioGroup>
+
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="30dp"
+                    android:layout_margin="5dp"
+                    android:orientation="horizontal">
+
+                    <TextView
+                        android:layout_width="120dp"
+                        android:layout_height="wrap_content"
+                        android:text="Tanggal Lahir"
+                        android:textSize="15sp" />
+
+                    <EditText
+                        android:id="@+id/etTglLahir"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:ems="10"
+                        android:hint="Masukkan Tanggal" />
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="30dp"
+                    android:layout_margin="5dp"
+                    android:orientation="horizontal">
+
+                    <TextView
+                        android:layout_width="120dp"
+                        android:layout_height="wrap_content"
+                        android:text="Foto"
+                        android:textSize="15sp" />
+
+                    <ImageView
+                        android:id="@+id/igContainer"
+                        android:layout_width="60dp"
+                        android:layout_height="60dp"
+                        android:layout_gravity="center"
+                        android:src="@drawable/userlogin_mhs" />
+
+                    <Button
+                        android:id="@+id/getFoto"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="20dp"
+                        android:layout_marginTop="5dp"
+                        android:layout_marginRight="10dp"
+                        android:text="Pilih Gambar"
+                        android:textAllCaps="false"
+                        android:textSize="15sp" />
+
+
+                </LinearLayout>
+
+
+            </LinearLayout>
+
+        </ScrollView>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="0dip"
+            android:layout_marginBottom="25pt"
+            android:layout_weight="1"
+            android:gravity="center|bottom"
+            android:orientation="vertical">
+
+            <Button
+                android:id="@+id/btSimpan"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:layout_marginBottom="10dp"
+                android:backgroundTint="#CEDFFA"
+                android:text="Simpan"
+                android:textColor="@color/purple_700" />
+
+        </LinearLayout>
+
+    </LinearLayout>
+
+</RelativeLayout>

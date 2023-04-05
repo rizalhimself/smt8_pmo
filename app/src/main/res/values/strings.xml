@@ -11,5 +11,17 @@
     <string name="menu_dataMahasiswa">Data Mahasiswa</string>
     <string name="menu_gallery">Gallery</string>
     <string name="menu_slideshow">Slideshow</string>
+    <string-array name="list_fakultas">
+        <item name="Fakultas Ilmu Komputer" />
+        <item name="Fakultas Ilmu Komunikasi dan Bisnis Digital" />
+    </string-array>
+    <string-array name="list_prodi">
+        <item name="Informatika" />
+        <item name="Sistem Informasi" />
+        <item name="Teknologi Informasi" />
+        <item name="Ilmu Komunikasi" />
+        <item name="Bisnis Digital" />
+    </string-array>
+
 
 </resources>
