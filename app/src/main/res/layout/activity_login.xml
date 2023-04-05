@@ -56,24 +56,33 @@
         android:textColorHint="@color/white"
         android:textSize="@dimen/ukuran_font_biasa" />
 
-    <Button
-        android:id="@+id/btLogin"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_gravity="center"
-        android:layout_marginTop="25pt"
-        android:backgroundTint="#CEDFFA"
-        android:text="LogIn"
-        android:textColor="@color/purple_700" />
-
-    <TextView
+    <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginHorizontal="30dp"
+        android:layout_height="0dip"
         android:layout_marginBottom="25pt"
-        android:text="Tidak bisa login karena lupa username/password silakan klik disini"
-        android:textAlignment="center"
-        android:textColor="@color/white"
-        android:textSize="6pt" />
+        android:layout_weight="1"
+        android:gravity="center|bottom"
+        android:orientation="vertical">
+
+        <Button
+            android:id="@+id/btLogin"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:layout_marginBottom="10dp"
+            android:backgroundTint="#CEDFFA"
+            android:text="LogIn"
+            android:textColor="@color/purple_700" />
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginHorizontal="30dp"
+            android:text="Tidak bisa login karena lupa username/password silakan klik disini"
+            android:textAlignment="center"
+            android:textColor="@color/white"
+            android:textSize="6pt" />
+
+    </LinearLayout>
 
 </LinearLayout>
