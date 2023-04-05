@@ -1,11 +1,11 @@
 package com.example.pmo23_praktikum;
 
-import androidx.appcompat.app.AppCompatActivity;
-
 import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
 import android.view.WindowManager;
+
+import androidx.appcompat.app.AppCompatActivity;
 
 public class MainActivity2 extends AppCompatActivity {
 
@@ -20,7 +20,7 @@ public class MainActivity2 extends AppCompatActivity {
         new Handler().postDelayed(new Runnable() {
             @Override
             public void run() {
-                Intent i = new Intent(MainActivity2.this, MainActivity.class);
+                Intent i = new Intent(MainActivity2.this, LoginActivity.class);
 
                 startActivity(i);
                 finish();

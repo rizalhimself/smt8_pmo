@@ -1,0 +1,79 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/purple_700"
+    android:orientation="vertical">
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="25pt"
+        android:text="Selamat datang di Aplikasi Mahasiswa"
+        android:textAlignment="center"
+        android:textColor="@color/white"
+        android:textSize="@dimen/ukuran_font_biasa"
+        android:textStyle="bold" />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center_horizontal"
+        android:orientation="vertical">
+
+        <ImageView
+            android:layout_width="168dp"
+            android:layout_height="282dp"
+            android:contentDescription="@string/app_name"
+            android:src="@drawable/userlogin_mhs"
+            app:tint="@color/white" />
+
+    </LinearLayout>
+
+
+    <EditText
+        android:id="@+id/etNIM"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginHorizontal="30dp"
+        android:hint="Masukkan NIM Anda"
+        android:inputType="textCapCharacters"
+        android:textAlignment="center"
+        android:textColor="@color/white"
+        android:textColorHint="@color/white"
+        android:textSize="@dimen/ukuran_font_biasa" />
+
+    <EditText
+        android:id="@+id/etPassword"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginHorizontal="30dp"
+        android:hint="Masukkan Password Anda"
+        android:inputType="textPassword"
+        android:textAlignment="center"
+        android:textColor="@color/white"
+        android:textColorHint="@color/white"
+        android:textSize="@dimen/ukuran_font_biasa" />
+
+    <Button
+        android:id="@+id/btLogin"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:layout_marginTop="25pt"
+        android:backgroundTint="#CEDFFA"
+        android:text="LogIn"
+        android:textColor="@color/purple_700" />
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginHorizontal="30dp"
+        android:layout_marginBottom="25pt"
+        android:text="Tidak bisa login karena lupa username/password silakan klik disini"
+        android:textAlignment="center"
+        android:textColor="@color/white"
+        android:textSize="6pt" />
+
+</LinearLayout>
