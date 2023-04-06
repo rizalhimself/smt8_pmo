@@ -10,35 +10,34 @@
         android:id="@+id/Data"
         android:layout_width="match_parent"
         android:layout_height="40dp"
-        android:gravity="end"
         android:orientation="horizontal">
 
         <Button
             android:id="@+id/showdata"
             android:layout_width="30dp"
-            android:layout_height="25dp"
-            android:layout_marginTop="5dp"
-            android:layout_marginEnd="1pt"
+            android:layout_height="30dp"
+            android:layout_gravity="center"
+            android:layout_marginStart="@dimen/margin_start_end_header_crud"
+            android:layout_marginEnd="@dimen/margin_start_end_header_crud"
             android:background="@color/purple_700"
             android:gravity="center_vertical" />
 
         <TextView
-            android:layout_width="250dp"
+            android:layout_width="326dp"
             android:layout_height="40dp"
             android:layout_gravity="center"
-            android:layout_marginRight="20dp"
             android:fontFamily="serif"
             android:gravity="center"
-            android:text="Data Mahasiswa"
-            android:textSize="20dp" />
+            android:text="@string/data_mahasiswa_header_crud"
+            android:textSize="@dimen/uk_font_header_crud" />
 
         <ProgressBar
             android:id="@+id/idProgress"
-            android:layout_width="35dp"
-            android:layout_height="35dp"
+            android:layout_width="30dp"
+            android:layout_height="30dp"
             android:layout_gravity="center"
-            android:layout_marginStart="2pt"
-            android:layout_marginEnd="20dp"
+            android:layout_marginStart="@dimen/margin_start_end_header_crud"
+            android:layout_marginEnd="@dimen/margin_start_end_header_crud"
             android:backgroundTint="@color/white" />
 
     </LinearLayout>
@@ -65,21 +64,22 @@
 
                 <LinearLayout
                     android:layout_width="match_parent"
-                    android:layout_height="30dp"
-                    android:layout_margin="5dp"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="@dimen/margin_linear_layout_crud"
                     android:orientation="horizontal">
 
                     <TextView
                         android:layout_width="100dp"
                         android:layout_height="wrap_content"
-                        android:text="NIM"
-                        android:textSize="15dp" />
+                        android:text="@string/nim"
+                        android:textSize="@dimen/uk_font_crud" />
 
                     <EditText
                         android:id="@+id/etNim"
                         android:layout_width="match_parent"
-                        android:layout_height="match_parent"
+                        android:layout_height="wrap_content"
                         android:ems="10"
+                        android:textSize="@dimen/uk_font_crud"
                         android:hint="NIM"
                         android:inputType="textPersonName"
                         android:maxLength="8" />
@@ -87,28 +87,29 @@
 
                 <LinearLayout
                     android:layout_width="match_parent"
-                    android:layout_height="30dp"
-                    android:layout_margin="5dp"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="@dimen/margin_linear_layout_crud"
                     android:orientation="horizontal">
 
                     <TextView
                         android:layout_width="100dp"
                         android:layout_height="wrap_content"
                         android:text="Nama"
-                        android:textSize="15dp" />
+                        android:textSize="@dimen/uk_font_crud" />
 
                     <EditText
                         android:id="@+id/etNama"
                         android:layout_width="match_parent"
-                        android:layout_height="match_parent"
+                        android:layout_height="wrap_content"
                         android:ems="10"
                         android:hint="Masukkan Nama"
+                        android:textSize="@dimen/uk_font_crud"
                         android:inputType="textPersonName" />
                 </LinearLayout>
 
                 <LinearLayout
                     android:layout_width="match_parent"
-                    android:layout_height="30dp"
+                    android:layout_height="wrap_content"
                     android:layout_margin="5dp"
                     android:orientation="horizontal">
 
@@ -116,18 +117,18 @@
                         android:layout_width="100dp"
                         android:layout_height="wrap_content"
                         android:text="Fakultas"
-                        android:textSize="15dp" />
+                        android:textSize="@dimen/uk_font_crud" />
 
                     <Spinner
                         android:id="@+id/fakultas"
                         android:layout_width="match_parent"
-                        android:layout_height="30dp"
+                        android:layout_height="match_parent"
                         android:entries="@array/list_fakultas" />
                 </LinearLayout>
 
                 <LinearLayout
                     android:layout_width="match_parent"
-                    android:layout_height="30dp"
+                    android:layout_height="wrap_content"
                     android:layout_margin="5dp"
                     android:orientation="horizontal">
 
@@ -135,71 +136,69 @@
                         android:layout_width="100dp"
                         android:layout_height="wrap_content"
                         android:text="Prodi"
-                        android:textSize="15dp" />
+                        android:textSize="@dimen/uk_font_crud" />
 
                     <Spinner
                         android:id="@+id/prodi"
                         android:layout_width="match_parent"
-                        android:layout_height="30dp"
+                        android:layout_height="match_parent"
                         android:entries="@array/list_prodi" />
                 </LinearLayout>
 
                 <LinearLayout
                     android:layout_width="match_parent"
-                    android:layout_height="30dp"
+                    android:layout_height="wrap_content"
                     android:layout_margin="5dp"
                     android:orientation="horizontal">
 
                     <TextView
-                        android:layout_width="100dp"
+                        android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:text="Golongan Darah"
-                        android:textSize="15dp" />
+                        android:textSize="@dimen/uk_font_crud" />
                 </LinearLayout>
 
                 <LinearLayout
-                    android:layout_width="wrap_content"
+                    android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_gravity="right"
-                    android:layout_marginRight="10dp"
+                    android:layout_margin="5dp"
                     android:orientation="horizontal">
 
-                    <TextView
-                        android:id="@+id/hasil"
-                        android:layout_width="1dp"
-                        android:layout_height="1dp"
-                        android:text=""
-                        android:textSize="15sp" />
+                    <View
+                        android:layout_width="100dp"
+                        android:layout_height="match_parent" />
 
                     <CheckBox
                         android:id="@+id/cbGolA"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_marginLeft="5dp"
-                        android:layout_marginRight="20dp"
+                        android:layout_weight="1"
+                        android:textSize="@dimen/uk_font_crud"
                         android:text="A" />
 
                     <CheckBox
                         android:id="@+id/cbGolB"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_marginLeft="1dp"
-                        android:layout_marginRight="20dp"
+                        android:layout_weight="1"
+                        android:textSize="@dimen/uk_font_crud"
                         android:text="B" />
 
                     <CheckBox
                         android:id="@+id/cbGolAB"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_marginLeft="1dp"
-                        android:layout_marginRight="20dp"
+                        android:layout_weight="1"
+                        android:textSize="@dimen/uk_font_crud"
                         android:text="AB" />
 
                     <CheckBox
                         android:id="@+id/cbGolO"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_marginLeft="10dp"
+                        android:layout_weight="1"
+                        android:textSize="@dimen/uk_font_crud"
                         android:text="O" />
 
                 </LinearLayout>
@@ -211,10 +210,10 @@
                     android:orientation="horizontal">
 
                     <TextView
-                        android:layout_width="120dp"
+                        android:layout_width="100dp"
                         android:layout_height="wrap_content"
                         android:text="Jenis Kelamin"
-                        android:textSize="15sp" />
+                        android:textSize="@dimen/uk_font_crud" />
 
                     <RadioGroup
                         android:id="@+id/rgJenisKelamin"
@@ -227,6 +226,7 @@
                             android:layout_height="wrap_content"
                             android:checked="false"
                             android:onClick="rbClick"
+                            android:textSize="@dimen/uk_font_crud"
                             android:text="Pria" />
 
                         <RadioButton
@@ -234,6 +234,7 @@
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:checked="false"
+                            android:textSize="@dimen/uk_font_crud"
                             android:onClick="rbClick"
                             android:text="Wanita" />
                     </RadioGroup>
@@ -242,35 +243,36 @@
 
                 <LinearLayout
                     android:layout_width="match_parent"
-                    android:layout_height="30dp"
+                    android:layout_height="wrap_content"
                     android:layout_margin="5dp"
                     android:orientation="horizontal">
 
                     <TextView
-                        android:layout_width="120dp"
+                        android:layout_width="100dp"
                         android:layout_height="wrap_content"
                         android:text="Tanggal Lahir"
-                        android:textSize="15sp" />
+                        android:textSize="@dimen/uk_font_crud" />
 
                     <EditText
                         android:id="@+id/etTglLahir"
                         android:layout_width="match_parent"
-                        android:layout_height="match_parent"
+                        android:layout_height="wrap_content"
                         android:ems="10"
+                        android:textSize="@dimen/uk_font_crud"
                         android:hint="Masukkan Tanggal" />
                 </LinearLayout>
 
                 <LinearLayout
                     android:layout_width="match_parent"
-                    android:layout_height="30dp"
+                    android:layout_height="match_parent"
                     android:layout_margin="5dp"
                     android:orientation="horizontal">
 
                     <TextView
-                        android:layout_width="120dp"
+                        android:layout_width="100dp"
                         android:layout_height="wrap_content"
                         android:text="Foto"
-                        android:textSize="15sp" />
+                        android:textSize="@dimen/uk_font_crud" />
 
                     <ImageView
                         android:id="@+id/igContainer"
@@ -288,10 +290,55 @@
                         android:layout_marginRight="10dp"
                         android:text="Pilih Gambar"
                         android:textAllCaps="false"
-                        android:textSize="15sp" />
+                        android:textSize="@dimen/uk_font_crud" />
 
 
                 </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="5dp"
+                    android:orientation="horizontal">
+
+                    <TextView
+                        android:layout_width="100dp"
+                        android:layout_height="wrap_content"
+                        android:text="IPK"
+                        android:textSize="@dimen/uk_font_crud" />
+
+                    <EditText
+                        android:id="@+id/etIPK"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:ems="10"
+                        android:hint="Masukkan Nilai IPK"
+                        android:inputType="numberDecimal"
+                        android:textSize="@dimen/uk_font_crud" />
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="5dp"
+                    android:orientation="horizontal">
+
+                    <TextView
+                        android:layout_width="100dp"
+                        android:layout_height="wrap_content"
+                        android:text="Alamat"
+                        android:textSize="@dimen/uk_font_crud" />
+
+                    <EditText
+                        android:id="@+id/etAlamat"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:ems="10"
+                        android:hint="Masukkan Alamat Lengkap"
+                        android:inputType="textMultiLine"
+                        android:textSize="@dimen/uk_font_crud" />
+                </LinearLayout>
+
 
 
             </LinearLayout>
@@ -301,7 +348,7 @@
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="0dip"
-            android:layout_marginBottom="25pt"
+            android:layout_marginBottom="25dp"
             android:layout_weight="1"
             android:gravity="center|bottom"
             android:orientation="vertical">

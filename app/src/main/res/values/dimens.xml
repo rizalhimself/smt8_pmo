@@ -6,4 +6,10 @@
     <dimen name="nav_header_height">176dp</dimen>
     <dimen name="fab_margin">16dp</dimen>
     <dimen name="ukuran_font_biasa">9pt</dimen>
+    <dimen name="uk_font_crud">15sp</dimen>
+    <dimen name="tinggi_layout_widget">35dp</dimen>
+    <dimen name="margin_start_end_header_crud">5dp</dimen>
+    <dimen name="uk_font_header_crud">20sp</dimen>
+    <dimen name="margin_linear_layout_crud">5dp</dimen>
+
 </resources>
