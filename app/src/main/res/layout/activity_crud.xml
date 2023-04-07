@@ -10,6 +10,7 @@
         android:id="@+id/Data"
         android:layout_width="match_parent"
         android:layout_height="40dp"
+        android:background="@color/purple_700"
         android:orientation="horizontal">
 
         <Button
@@ -17,19 +18,30 @@
             android:layout_width="30dp"
             android:layout_height="30dp"
             android:layout_gravity="center"
-            android:layout_marginStart="@dimen/margin_start_end_header_crud"
+            android:layout_marginStart="20dp"
             android:layout_marginEnd="@dimen/margin_start_end_header_crud"
-            android:background="@color/purple_700"
+            android:backgroundTint="@color/teal_200"
             android:gravity="center_vertical" />
 
+        <View
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            android:layout_weight="1" />
+
         <TextView
-            android:layout_width="326dp"
+            android:layout_width="296dp"
             android:layout_height="40dp"
             android:layout_gravity="center"
-            android:fontFamily="serif"
             android:gravity="center"
             android:text="@string/data_mahasiswa_header_crud"
-            android:textSize="@dimen/uk_font_header_crud" />
+            android:textColor="@color/white"
+            android:textSize="@dimen/uk_font_header_crud"
+            android:textStyle="bold" />
+
+        <View
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            android:layout_weight="1" />
 
         <ProgressBar
             android:id="@+id/idProgress"
@@ -37,7 +49,7 @@
             android:layout_height="30dp"
             android:layout_gravity="center"
             android:layout_marginStart="@dimen/margin_start_end_header_crud"
-            android:layout_marginEnd="@dimen/margin_start_end_header_crud"
+            android:layout_marginEnd="20dp"
             android:backgroundTint="@color/white" />
 
     </LinearLayout>
@@ -243,7 +255,7 @@
 
                 <LinearLayout
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
+                    android:layout_height="50dp"
                     android:layout_margin="5dp"
                     android:orientation="horizontal">
 
