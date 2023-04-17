@@ -1,16 +1,16 @@
-package com.example.pmo23_praktikum.ui.gallery;
+package com.rizalhimself.pmo23_praktikum.ui.mahasiswa;
 
 import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.ViewModel;
 
-public class GalleryViewModel extends ViewModel {
+public class MahasiswaViewModel extends ViewModel {
 
     private final MutableLiveData<String> mText;
 
-    public GalleryViewModel() {
+    public MahasiswaViewModel() {
         mText = new MutableLiveData<>();
-        mText.setValue("This is gallery fragment");
+        mText.setValue("Ini fragment mahasiswa!!!");
     }
 
     public LiveData<String> getText() {

@@ -1,4 +1,4 @@
-package com.example.pmo23_praktikum;
+package com.rizalhimself.pmo23_praktikum;
 
 import android.os.Bundle;
 import android.view.View;

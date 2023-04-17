@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "179351965890",
+    "project_id": "pmo23praktikum",
+    "storage_bucket": "pmo23praktikum.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:179351965890:android:eea51b9e8e75565f36eb5b",
+        "android_client_info": {
+          "package_name": "com.rizalhimself.pmo23_praktikum"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "179351965890-u668dgh43529v726oqnvah41nv7u52an.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyC5eeYkf9qG0knC2z2G2qbkNZVOrN1g58Q"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "179351965890-u668dgh43529v726oqnvah41nv7u52an.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

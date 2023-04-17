@@ -1,4 +1,4 @@
-package com.example.pmo23_praktikum;
+package com.rizalhimself.pmo23_praktikum;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -13,8 +13,8 @@ import androidx.navigation.Navigation;
 import androidx.navigation.ui.AppBarConfiguration;
 import androidx.navigation.ui.NavigationUI;
 
-import com.example.pmo23_praktikum.databinding.ActivityMainBinding;
 import com.google.android.material.navigation.NavigationView;
+import com.rizalhimself.pmo23_praktikum.databinding.ActivityMainBinding;
 import com.squareup.picasso.Picasso;
 
 public class MainActivity extends AppCompatActivity {

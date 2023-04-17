@@ -1,16 +1,16 @@
-package com.example.pmo23_praktikum.ui.mahasiswa;
+package com.rizalhimself.pmo23_praktikum.ui.home;
 
 import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.ViewModel;
 
-public class MahasiswaViewModel extends ViewModel {
+public class HomeViewModel extends ViewModel {
 
     private final MutableLiveData<String> mText;
 
-    public MahasiswaViewModel() {
+    public HomeViewModel() {
         mText = new MutableLiveData<>();
-        mText.setValue("Ini fragment mahasiswa!!!");
+        mText.setValue("This is home fragment");
     }
 
     public LiveData<String> getText() {

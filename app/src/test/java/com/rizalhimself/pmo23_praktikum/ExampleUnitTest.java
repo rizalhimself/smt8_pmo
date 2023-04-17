@@ -1,8 +1,8 @@
-package com.example.pmo23_praktikum;
+package com.rizalhimself.pmo23_praktikum;
+
+import static org.junit.Assert.assertEquals;
 
 import org.junit.Test;
-
-import static org.junit.Assert.*;
 
 /**
  * Example local unit test, which will execute on the development machine (host).

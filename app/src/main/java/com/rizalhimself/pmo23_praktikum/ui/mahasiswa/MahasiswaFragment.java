@@ -1,4 +1,4 @@
-package com.example.pmo23_praktikum.ui.slideshow;
+package com.rizalhimself.pmo23_praktikum.ui.mahasiswa;
 
 import android.os.Bundle;
 import android.view.LayoutInflater;
@@ -10,22 +10,22 @@ import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProvider;
 
-import com.example.pmo23_praktikum.databinding.FragmentSlideshowBinding;
+import com.rizalhimself.pmo23_praktikum.databinding.FragmentGalleryBinding;
 
-public class SlideshowFragment extends Fragment {
+public class MahasiswaFragment extends Fragment {
 
-    private FragmentSlideshowBinding binding;
+    private FragmentGalleryBinding binding;
 
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
-        SlideshowViewModel slideshowViewModel =
-                new ViewModelProvider(this).get(SlideshowViewModel.class);
+        MahasiswaViewModel mahasiswaViewModel =
+                new ViewModelProvider(this).get(MahasiswaViewModel.class);
 
-        binding = FragmentSlideshowBinding.inflate(inflater, container, false);
+        binding = FragmentGalleryBinding.inflate(inflater, container, false);
         View root = binding.getRoot();
 
-        final TextView textView = binding.textSlideshow;
-        slideshowViewModel.getText().observe(getViewLifecycleOwner(), textView::setText);
+        final TextView textView = binding.textGallery;
+        mahasiswaViewModel.getText().observe(getViewLifecycleOwner(), textView::setText);
         return root;
     }
 

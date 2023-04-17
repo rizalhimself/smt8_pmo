@@ -1,4 +1,4 @@
-package com.example.pmo23_praktikum.ui.gallery;
+package com.rizalhimself.pmo23_praktikum.ui.gallery;
 
 import android.os.Bundle;
 import android.view.LayoutInflater;
@@ -10,7 +10,7 @@ import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProvider;
 
-import com.example.pmo23_praktikum.databinding.FragmentGalleryBinding;
+import com.rizalhimself.pmo23_praktikum.databinding.FragmentGalleryBinding;
 
 public class GalleryFragment extends Fragment {
 
