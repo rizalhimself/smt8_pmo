@@ -71,14 +71,15 @@
             android:layout_gravity="center"
             android:layout_marginBottom="10dp"
             android:backgroundTint="#CEDFFA"
-            android:text="LogIn"
+            android:text="@string/bt_masuk_login"
             android:textColor="@color/purple_700" />
 
         <TextView
+            android:id="@+id/tvDaftar"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginHorizontal="30dp"
-            android:text="Tidak bisa login karena lupa username/password silakan klik disini"
+            android:text="@string/tv_daftar_login"
             android:textAlignment="center"
             android:textColor="@color/white"
             android:textSize="6pt" />

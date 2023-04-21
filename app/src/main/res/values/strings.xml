@@ -14,6 +14,8 @@
     <string name="nim">NIM</string>
     <string name="data_mahasiswa_header_crud">Data Mahasiswa</string>
     <string name="cbAgreementText">Saya menyetujui semua peraturan yang ada pada aplikasi ini.</string>
+    <string name="bt_masuk_login">Masuk</string>
+    <string name="tv_daftar_login">Belum memiliki akun silakan daftar disini</string>
     <string-array name="list_fakultas">
         <item name="Fakultas Ilmu Komputer" />
         <item name="Fakultas Ilmu Komunikasi dan Bisnis Digital" />

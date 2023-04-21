@@ -34,7 +34,7 @@
     </LinearLayout>
 
     <EditText
-        android:id="@+id/etNIM"
+        android:id="@+id/etNIMReg"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginHorizontal="30dp"
@@ -46,7 +46,7 @@
         android:textSize="@dimen/ukuran_font_biasa" />
 
     <EditText
-        android:id="@+id/etEmail"
+        android:id="@+id/etEmailReg"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginHorizontal="30dp"
@@ -70,7 +70,7 @@
         android:textSize="@dimen/ukuran_font_biasa" />
 
     <EditText
-        android:id="@+id/etPasswordUlang"
+        android:id="@+id/etPasswordUlangReg"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginHorizontal="30dp"
