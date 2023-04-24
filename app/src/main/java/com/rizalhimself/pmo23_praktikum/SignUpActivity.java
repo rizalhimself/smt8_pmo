@@ -18,6 +18,8 @@ import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseAuthInvalidCredentialsException;
+import com.google.firebase.auth.FirebaseAuthUserCollisionException;
 import com.google.firebase.auth.FirebaseUser;
 
 public class SignUpActivity extends AppCompatActivity {
@@ -25,7 +27,6 @@ public class SignUpActivity extends AppCompatActivity {
     FirebaseAuth mAuth;
     FirebaseAuth.AuthStateListener mAuthListener;
     private EditText etEmail, etPassword, etPasswordU;
-    private Button btDaftar;
     private CheckBox cbAgree;
 
     @Override
@@ -33,11 +34,10 @@ public class SignUpActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_sign_up);
 
-
         etEmail = findViewById(R.id.etEmailReg);
         etPassword = findViewById(R.id.etPasswordReg);
         etPasswordU = findViewById(R.id.etPasswordUlangReg);
-        btDaftar = findViewById(R.id.btDaftarReg);
+        Button btDaftar = findViewById(R.id.btDaftarReg);
         cbAgree = findViewById(R.id.cbAgreement);
 
         mAuth = FirebaseAuth.getInstance();
@@ -142,9 +142,19 @@ public class SignUpActivity extends AppCompatActivity {
                                     "Registrasi Berhasil",
                                     Toast.LENGTH_LONG).show();
                         } else {
-                            Toast.makeText(getApplicationContext(),
-                                    "Registrasi Gagal",
-                                    Toast.LENGTH_LONG).show();
+                            try {
+                                throw task.getException();
+                            } catch (FirebaseAuthInvalidCredentialsException malformedEmail) {
+                                Toast.makeText(getApplicationContext(),
+                                        "Registrasi Gagal : Format Email Salah",
+                                        Toast.LENGTH_LONG).show();
+                            } catch (FirebaseAuthUserCollisionException existEmail) {
+                                Toast.makeText(getApplicationContext(),
+                                        "Registrasi Gagal : Email Sudah Terdaftar",
+                                        Toast.LENGTH_LONG).show();
+                            } catch (Exception e) {
+                                Log.d("TAG", "onComplete: " + e.getMessage());
+                            }
                         }
                     }
                 });
