@@ -139,14 +139,16 @@ public class SignUpActivity extends AppCompatActivity {
                         if (task.isSuccessful()) {
                             mAuth.addAuthStateListener(mAuthListener);
                             Toast.makeText(getApplicationContext(),
-                                    "Registrasi Berhasil",
+                                    "Registrasi Berhasil : Silakan Check Email Anda",
                                     Toast.LENGTH_LONG).show();
+                            startActivity(new Intent(SignUpActivity.this, LoginActivity.class));
+                            finish();
                         } else {
                             try {
                                 throw task.getException();
                             } catch (FirebaseAuthInvalidCredentialsException malformedEmail) {
                                 Toast.makeText(getApplicationContext(),
-                                        "Registrasi Gagal : Format Email Salah",
+                                        "Registrasi Gagal : Format Email/Password Salah",
                                         Toast.LENGTH_LONG).show();
                             } catch (FirebaseAuthUserCollisionException existEmail) {
                                 Toast.makeText(getApplicationContext(),
@@ -168,13 +170,11 @@ public class SignUpActivity extends AppCompatActivity {
                     public void onComplete(@NonNull Task<Void> task) {
                         if (task.isSuccessful()) {
                             mAuth.signOut();
-                            startActivity(new Intent(SignUpActivity.this, LoginActivity.class));
-                            finish();
                         } else {
-                            overridePendingTransition(0, 0);
                             finish();
                             overridePendingTransition(0, 0);
                             startActivity(getIntent());
+                            overridePendingTransition(0, 0);
                         }
                     }
                 });

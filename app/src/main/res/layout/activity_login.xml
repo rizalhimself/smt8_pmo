@@ -33,19 +33,19 @@
 
 
     <EditText
-        android:id="@+id/etNIM"
+        android:id="@+id/etEmailLog"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginHorizontal="30dp"
-        android:hint="Masukkan NIM Anda"
-        android:inputType="textCapCharacters"
+        android:hint="Masukkan Email Anda"
+        android:inputType="textEmailAddress"
         android:textAlignment="center"
         android:textColor="@color/white"
         android:textColorHint="@color/white"
         android:textSize="@dimen/ukuran_font_biasa" />
 
     <EditText
-        android:id="@+id/etPassword"
+        android:id="@+id/etPasswordLog"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginHorizontal="30dp"
