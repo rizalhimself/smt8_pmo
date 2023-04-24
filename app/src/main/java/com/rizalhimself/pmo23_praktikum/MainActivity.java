@@ -40,7 +40,6 @@ public class MainActivity extends AppCompatActivity {
         binding.appBarMain.fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                startActivity(new Intent(MainActivity.this, crud_activity.class));
             }
         });
 
@@ -74,7 +73,10 @@ public class MainActivity extends AppCompatActivity {
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
-            case R.id.action_logout:
+            case (R.id.edit_profil):
+                startActivity(new Intent(MainActivity.this, crud_activity.class));
+                return true;
+            case (R.id.action_logout):
                 mAuth.signOut();
                 startActivity(new Intent(MainActivity.this, LoginActivity.class));
                 finish();
