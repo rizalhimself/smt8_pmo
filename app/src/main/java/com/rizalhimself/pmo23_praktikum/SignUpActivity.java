@@ -1,18 +1,32 @@
 package com.rizalhimself.pmo23_praktikum;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.text.Editable;
 import android.text.TextWatcher;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.EditText;
 import android.widget.Toast;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.Task;
+import com.google.firebase.auth.AuthResult;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
+
 public class SignUpActivity extends AppCompatActivity {
-    String nim, email, password;
+    String email, password;
+    FirebaseAuth mAuth;
+    FirebaseAuth.AuthStateListener mAuthListener;
+    private EditText etEmail, etPassword, etPasswordU;
+    private Button btDaftar;
+    private CheckBox cbAgree;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -20,31 +34,23 @@ public class SignUpActivity extends AppCompatActivity {
         setContentView(R.layout.activity_sign_up);
 
 
-        EditText etNim = findViewById(R.id.etNIMReg);
-        EditText etEmail = findViewById(R.id.etEmailReg);
-        EditText etPassword = findViewById(R.id.etPasswordReg);
-        EditText etPasswordU = findViewById(R.id.etPasswordUlangReg);
-        Button btnDaftar = findViewById(R.id.btDaftarReg);
-        CheckBox cbAgree = findViewById(R.id.cbAgreement);
+        etEmail = findViewById(R.id.etEmailReg);
+        etPassword = findViewById(R.id.etPasswordReg);
+        etPasswordU = findViewById(R.id.etPasswordUlangReg);
+        btDaftar = findViewById(R.id.btDaftarReg);
+        cbAgree = findViewById(R.id.cbAgreement);
 
-        etNim.addTextChangedListener(new TextWatcher() {
+        mAuth = FirebaseAuth.getInstance();
+        mAuthListener = new FirebaseAuth.AuthStateListener() {
             @Override
-            public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
-            }
-
-            @Override
-            public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
-            }
-
-            @Override
-            public void afterTextChanged(Editable editable) {
-                if (etNim.getText().toString().length() <= 0) {
-                    etNim.setError("NIM Harus Diisi");
-                } else {
-                    etNim.setError(null);
+            public void onAuthStateChanged(@NonNull FirebaseAuth firebaseAuth) {
+                FirebaseUser user = firebaseAuth.getCurrentUser();
+                if (user != null) {
+                    kirimEmailVerifikasi();
                 }
             }
-        });
+        };
+
 
         etEmail.addTextChangedListener(new TextWatcher() {
             @Override
@@ -105,20 +111,63 @@ public class SignUpActivity extends AppCompatActivity {
             }
         });
 
-        btnDaftar.setOnClickListener(new View.OnClickListener() {
+        btDaftar.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                nim = etNim.getText().toString();
                 email = etEmail.getText().toString();
                 password = etPasswordU.getText().toString();
                 if (!cbAgree.isChecked()) {
                     Toast.makeText(getApplicationContext(), "Anda belum menyetujui peraturan aplikasi ini!", Toast.LENGTH_SHORT).show();
                 } else {
-                    //nanti eksekusi method send data to firebase
-                    Toast.makeText(getApplicationContext(), "Selamat Datang" + nim + email + password, Toast.LENGTH_LONG).show();
-                    finish();
+                    //Toast.makeText(getApplicationContext(), "Selamat Datang" + nim + email + password, Toast.LENGTH_LONG).show();
+                    registerBaru();
                 }
             }
         });
     }
+
+    private void registerBaru() {
+        email = etEmail.getText().toString();
+        password = etPasswordU.getText().toString();
+
+        mAuth
+                .createUserWithEmailAndPassword(email, password)
+                .addOnCompleteListener(new OnCompleteListener<AuthResult>() {
+                    @Override
+                    public void onComplete(@NonNull Task<AuthResult> task) {
+                        Log.d("TAG", "createUserWithEmail:onComplete" + task.isSuccessful());
+                        if (task.isSuccessful()) {
+                            mAuth.addAuthStateListener(mAuthListener);
+                            Toast.makeText(getApplicationContext(),
+                                    "Registrasi Berhasil",
+                                    Toast.LENGTH_LONG).show();
+                        } else {
+                            Toast.makeText(getApplicationContext(),
+                                    "Registrasi Gagal",
+                                    Toast.LENGTH_LONG).show();
+                        }
+                    }
+                });
+    }
+
+    private void kirimEmailVerifikasi() {
+        FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
+        user.sendEmailVerification()
+                .addOnCompleteListener(new OnCompleteListener<Void>() {
+                    @Override
+                    public void onComplete(@NonNull Task<Void> task) {
+                        if (task.isSuccessful()) {
+                            mAuth.signOut();
+                            startActivity(new Intent(SignUpActivity.this, LoginActivity.class));
+                            finish();
+                        } else {
+                            overridePendingTransition(0, 0);
+                            finish();
+                            overridePendingTransition(0, 0);
+                            startActivity(getIntent());
+                        }
+                    }
+                });
+    }
+
 }
