@@ -21,12 +21,20 @@ import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseAuthInvalidCredentialsException;
 import com.google.firebase.auth.FirebaseAuthUserCollisionException;
 import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
 
 public class SignUpActivity extends AppCompatActivity {
-    String email, password;
+    String email, password, nim, nama;
     FirebaseAuth mAuth;
+    FirebaseDatabase firebaseDatabase;
+    DatabaseReference databaseReference;
     FirebaseAuth.AuthStateListener mAuthListener;
-    private EditText etEmail, etPassword, etPasswordU;
+    RegistInfo registInfo;
+    private EditText etNim, etEmail, etPassword, etPasswordU, etNama;
     private CheckBox cbAgree;
 
     @Override
@@ -34,6 +42,8 @@ public class SignUpActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_sign_up);
 
+        etNama = findViewById(R.id.etNamaReg);
+        etNim = findViewById(R.id.etNIMReg);
         etEmail = findViewById(R.id.etEmailReg);
         etPassword = findViewById(R.id.etPasswordReg);
         etPasswordU = findViewById(R.id.etPasswordUlangReg);
@@ -41,6 +51,10 @@ public class SignUpActivity extends AppCompatActivity {
         cbAgree = findViewById(R.id.cbAgreement);
 
         mAuth = FirebaseAuth.getInstance();
+        firebaseDatabase = FirebaseDatabase.getInstance();
+        databaseReference = firebaseDatabase.getReference("RegistInfo");
+
+        registInfo = new RegistInfo();
         mAuthListener = new FirebaseAuth.AuthStateListener() {
             @Override
             public void onAuthStateChanged(@NonNull FirebaseAuth firebaseAuth) {
@@ -51,6 +65,47 @@ public class SignUpActivity extends AppCompatActivity {
             }
         };
 
+        etNim.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+
+            }
+
+            @Override
+            public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+
+            }
+
+            @Override
+            public void afterTextChanged(Editable editable) {
+                if (etNim.getText().toString().length() == 0) {
+                    etNim.setError("NIM Harus Diisi");
+                } else {
+                    etNim.setError(null);
+                }
+            }
+        });
+
+        etNama.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+
+            }
+
+            @Override
+            public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+
+            }
+
+            @Override
+            public void afterTextChanged(Editable editable) {
+                if (etNama.getText().toString().length() == 0) {
+                    etNama.setError("Nama Harus Diisi");
+                } else {
+                    etNama.setError(null);
+                }
+            }
+        });
 
         etEmail.addTextChangedListener(new TextWatcher() {
             @Override
@@ -114,8 +169,6 @@ public class SignUpActivity extends AppCompatActivity {
         btDaftar.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                email = etEmail.getText().toString();
-                password = etPasswordU.getText().toString();
                 if (!cbAgree.isChecked()) {
                     Toast.makeText(getApplicationContext(), "Anda belum menyetujui peraturan aplikasi ini!", Toast.LENGTH_SHORT).show();
                 } else {
@@ -127,6 +180,8 @@ public class SignUpActivity extends AppCompatActivity {
     }
 
     private void registerBaru() {
+        nama = etNama.getText().toString();
+        nim = etNim.getText().toString();
         email = etEmail.getText().toString();
         password = etPasswordU.getText().toString();
 
@@ -138,6 +193,7 @@ public class SignUpActivity extends AppCompatActivity {
                         Log.d("TAG", "createUserWithEmail:onComplete" + task.isSuccessful());
                         if (task.isSuccessful()) {
                             mAuth.addAuthStateListener(mAuthListener);
+                            addDataToRTDB(nim, nama, email);
                             Toast.makeText(getApplicationContext(),
                                     "Registrasi Berhasil : Silakan Check Email Anda",
                                     Toast.LENGTH_LONG).show();
@@ -160,6 +216,29 @@ public class SignUpActivity extends AppCompatActivity {
                         }
                     }
                 });
+    }
+
+    private void addDataToRTDB(String nim, String nama, String email) {
+        registInfo.setMhsNim(nim);
+        registInfo.setMhsNama(nama);
+        registInfo.setMhsEmail(email);
+        databaseReference.addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot snapshot) {
+                String userUID = mAuth.getUid();
+                databaseReference.child(userUID).setValue(registInfo);
+                Toast.makeText(getApplicationContext(),
+                        "Data Anda Telah Tersimpan",
+                        Toast.LENGTH_LONG).show();
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+                Toast.makeText(getApplicationContext(),
+                        "Gagal Menyimpan Data",
+                        Toast.LENGTH_LONG).show();
+            }
+        });
     }
 
     private void kirimEmailVerifikasi() {

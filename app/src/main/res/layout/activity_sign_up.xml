@@ -25,14 +25,37 @@
         android:orientation="vertical">
 
         <ImageView
-            android:layout_width="168dp"
-            android:layout_height="250dp"
+            android:layout_width="171dp"
+            android:layout_height="220dp"
             android:contentDescription="@string/app_name"
             android:src="@drawable/userlogin_mhs"
             app:tint="@color/white" />
 
     </LinearLayout>
 
+    <EditText
+        android:id="@+id/etNIMReg"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginHorizontal="30dp"
+        android:hint="Masukkan NIM Anda"
+        android:inputType="textCapWords"
+        android:textAlignment="center"
+        android:textColor="@color/white"
+        android:textColorHint="@color/white"
+        android:textSize="@dimen/ukuran_font_biasa" />
+
+    <EditText
+        android:id="@+id/etNamaReg"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginHorizontal="30dp"
+        android:hint="Masukkan Nama Anda"
+        android:inputType="textCapWords"
+        android:textAlignment="center"
+        android:textColor="@color/white"
+        android:textColorHint="@color/white"
+        android:textSize="@dimen/ukuran_font_biasa" />
 
     <EditText
         android:id="@+id/etEmailReg"
