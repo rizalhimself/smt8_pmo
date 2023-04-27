@@ -28,12 +28,13 @@ import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
 public class SignUpActivity extends AppCompatActivity {
-    String email, password, nim, nama;
-    FirebaseAuth mAuth;
-    FirebaseDatabase firebaseDatabase;
-    DatabaseReference databaseReference;
-    FirebaseAuth.AuthStateListener mAuthListener;
-    RegistInfo registInfo;
+    private String email;
+    private String nim;
+    private String nama;
+    private FirebaseAuth mAuth;
+    private DatabaseReference databaseReference;
+    private FirebaseAuth.AuthStateListener mAuthListener;
+    private RegistInfo registInfo;
     private EditText etNim, etEmail, etPassword, etPasswordU, etNama;
     private CheckBox cbAgree;
 
@@ -51,7 +52,7 @@ public class SignUpActivity extends AppCompatActivity {
         cbAgree = findViewById(R.id.cbAgreement);
 
         mAuth = FirebaseAuth.getInstance();
-        firebaseDatabase = FirebaseDatabase.getInstance();
+        FirebaseDatabase firebaseDatabase = FirebaseDatabase.getInstance();
         databaseReference = firebaseDatabase.getReference("RegistInfo");
 
         registInfo = new RegistInfo();
@@ -183,7 +184,7 @@ public class SignUpActivity extends AppCompatActivity {
         nama = etNama.getText().toString();
         nim = etNim.getText().toString();
         email = etEmail.getText().toString();
-        password = etPasswordU.getText().toString();
+        String password = etPasswordU.getText().toString();
 
         mAuth
                 .createUserWithEmailAndPassword(email, password)
