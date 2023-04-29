@@ -6,7 +6,9 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.ImageView;
+import android.widget.TextView;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.drawerlayout.widget.DrawerLayout;
 import androidx.navigation.NavController;
@@ -16,13 +18,20 @@ import androidx.navigation.ui.NavigationUI;
 
 import com.google.android.material.navigation.NavigationView;
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
 import com.rizalhimself.pmo23_praktikum.databinding.ActivityMainBinding;
 import com.squareup.picasso.Picasso;
+
+import java.util.Objects;
 
 public class MainActivity extends AppCompatActivity {
 
     private AppBarConfiguration mAppBarConfiguration;
-    private ActivityMainBinding binding;
+
 
     private FirebaseAuth mAuth;
 
@@ -30,11 +39,13 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         mAuth = FirebaseAuth.getInstance();
+        FirebaseDatabase firebaseDatabase = FirebaseDatabase.getInstance();
 
-        binding = ActivityMainBinding.inflate(getLayoutInflater());
+        com.rizalhimself.pmo23_praktikum.databinding.ActivityMainBinding binding = ActivityMainBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
 
         setSupportActionBar(binding.appBarMain.toolbar);
+
 
 
         binding.appBarMain.fab.setOnClickListener(new View.OnClickListener() {
@@ -55,12 +66,33 @@ public class MainActivity extends AppCompatActivity {
         NavigationUI.setupActionBarWithNavController(this, navController, mAppBarConfiguration);
         NavigationUI.setupWithNavController(navigationView, navController);
 
-        // Tampilkan profile picture dari internet
+        // Dapatkan headerview
         View navHeaderView = navigationView.getHeaderView(0);
-        ImageView image = navHeaderView.findViewById(R.id.ivAccount);
-        Picasso.get().load("https://3.bp.blogspot.com/-JqX8r-P6nZg/U2PIEPC9P2I/AAAAAAAAApc/3LBxUwC2kX8/s118/").into(image);
+        TextView tvNmUser = navHeaderView.findViewById(R.id.tvNamaUser);
+        TextView tvEmUser = navHeaderView.findViewById(R.id.tvEmailUser);
+        ImageView profilePic = navHeaderView.findViewById(R.id.ivAccount);
 
+        // Masukkan Gambar ke header
+        Picasso.get().load("https://3.bp.blogspot.com/-JqX8r-P6nZg/U2PIEPC9P2I/AAAAAAAAApc/3LBxUwC2kX8/s118/").into(profilePic);
 
+        // Ambil data user dari database
+        String uid = mAuth.getUid();
+        DatabaseReference databaseReference = firebaseDatabase.getReference();
+        DatabaseReference dbUser = databaseReference.child("RegistInfo").child(uid);
+        dbUser.addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot snapshot) {
+                String nmUser = Objects.requireNonNull(snapshot.child("mhsNama").getValue()).toString();
+                String emUser = Objects.requireNonNull(snapshot.child("mhsEmail").getValue()).toString();
+                tvNmUser.setText(nmUser);
+                tvEmUser.setText(emUser);
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+
+            }
+        });
     }
 
     @Override
