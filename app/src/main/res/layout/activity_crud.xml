@@ -285,14 +285,14 @@
                         android:textSize="@dimen/uk_font_crud" />
 
                     <ImageView
-                        android:id="@+id/igContainer"
+                        android:id="@+id/ivUser"
                         android:layout_width="60dp"
                         android:layout_height="60dp"
                         android:layout_gravity="center"
                         android:src="@drawable/userlogin_mhs" />
 
                     <Button
-                        android:id="@+id/getFoto"
+                        android:id="@+id/btPilihGambar"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_marginLeft="20dp"

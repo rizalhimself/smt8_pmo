@@ -1,6 +1,8 @@
 package com.rizalhimself.pmo23_praktikum;
 
+import android.app.Activity;
 import android.app.DatePickerDialog;
+import android.content.Intent;
 import android.graphics.Bitmap;
 import android.net.Uri;
 import android.os.Bundle;
@@ -17,6 +19,10 @@ import android.widget.RadioButton;
 import android.widget.RadioGroup;
 import android.widget.Spinner;
 
+import androidx.activity.result.ActivityResult;
+import androidx.activity.result.ActivityResultCallback;
+import androidx.activity.result.ActivityResultLauncher;
+import androidx.activity.result.contract.ActivityResultContracts;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
@@ -55,6 +61,21 @@ public class crud_activity extends AppCompatActivity {
     private String outputGol;
     private FirebaseAuth mAuth;
 
+    //method ambil gambar
+    private ActivityResultLauncher<Intent> galleryActivityResultLauncher =
+            registerForActivityResult(new ActivityResultContracts.StartActivityForResult(),
+                    new ActivityResultCallback<ActivityResult>() {
+                        @Override
+                        public void onActivityResult(ActivityResult result) {
+                            if (result.getResultCode() == Activity.RESULT_OK) {
+                                Intent data = result.getData();
+                                imageUrl = data.getData();
+
+                                ivUser.setImageURI(imageUrl);
+                            }
+                        }
+                    });
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -68,6 +89,10 @@ public class crud_activity extends AppCompatActivity {
         etEmail = findViewById(R.id.etEmailCrud);
         etNoHp = findViewById(R.id.etNoHPCrud);
         etTanggalLahir = findViewById(R.id.etTglLahir);
+
+        //inisialisasi image view
+        btPilihGambar = findViewById(R.id.btPilihGambar);
+        ivUser = findViewById(R.id.ivUser);
 
         //inisialisasi spinner
         spFakultas = findViewById(R.id.spFakultasCrud);
@@ -88,7 +113,6 @@ public class crud_activity extends AppCompatActivity {
         cbGolAB = findViewById(R.id.cbGolAB);
         cbGolB = findViewById(R.id.cbGolB);
         cbO = findViewById(R.id.cbGolO);
-
         cbGolA.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             @Override
             public void onCheckedChanged(CompoundButton compoundButton, boolean b) {
@@ -144,6 +168,17 @@ public class crud_activity extends AppCompatActivity {
             }
         });
 
+        //inisialisasi tombol pilih gambar
+        btPilihGambar.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                //pemanggilan fungsi pilih gambar
+                Intent intent = new Intent(Intent.ACTION_PICK);
+                intent.setType("image/*");
+                galleryActivityResultLauncher.launch(intent);
+            }
+        });
+
         //dapatkan akses data tersimpan user aktif
         mAuth = FirebaseAuth.getInstance();
         FirebaseDatabase firebaseDatabase = FirebaseDatabase.getInstance();
@@ -170,7 +205,7 @@ public class crud_activity extends AppCompatActivity {
 
     }
 
-    //pemanggilan method date pcker dialog
+    //method date pcker dialog
     public void tampilkanDialogTanggal() {
         Calendar calendar = Calendar.getInstance();
         datePickerDialog = new DatePickerDialog(this, new DatePickerDialog.OnDateSetListener() {
