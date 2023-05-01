@@ -8,6 +8,8 @@ import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.CheckBox;
+import android.widget.CompoundButton;
+import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.ProgressBar;
@@ -28,6 +30,7 @@ import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
 
 import java.text.SimpleDateFormat;
+import java.util.Calendar;
 
 public class crud_activity extends AppCompatActivity {
     private static final int REQUEST_CODE_CAMERA = 1;
@@ -39,7 +42,7 @@ public class crud_activity extends AppCompatActivity {
     StorageReference storageReference;
     DatabaseReference databaseReference;
     FirebaseStorage firebaseStorage;
-    private EditText etNIM, etNama, etEmail, etNoHp, etIPK, etAlamat;
+    private EditText etNIM, etNama, etEmail, etNoHp, etIPK, etAlamat, etTanggalLahir;
     private Spinner spFakultas, spProdi;
     private CheckBox cbGolA, cbGolB, cbGolAB, cbO;
     private ImageView ivUser;
@@ -49,6 +52,7 @@ public class crud_activity extends AppCompatActivity {
     private ProgressBar progressBar;
     private StorageReference reference;
     private String uid;
+    private String outputGol;
     private FirebaseAuth mAuth;
 
     @Override
@@ -63,9 +67,11 @@ public class crud_activity extends AppCompatActivity {
         etIPK = findViewById(R.id.etIPKCrud);
         etEmail = findViewById(R.id.etEmailCrud);
         etNoHp = findViewById(R.id.etNoHPCrud);
+        etTanggalLahir = findViewById(R.id.etTglLahir);
+
+        //inisialisasi spinner
         spFakultas = findViewById(R.id.spFakultasCrud);
         spProdi = findViewById(R.id.spProdiCrud);
-
         //Binding data ke spinner
         ArrayAdapter<CharSequence> adapterFakultas = ArrayAdapter.createFromResource(
                 this, R.array.list_fakultas, android.R.layout.simple_spinner_item);
@@ -76,6 +82,67 @@ public class crud_activity extends AppCompatActivity {
                 this, R.array.list_prodi, android.R.layout.simple_spinner_item);
         adapterProdi.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         spProdi.setAdapter(adapterProdi);
+
+        //inisialisasi checkbox
+        cbGolA = findViewById(R.id.cbGolA);
+        cbGolAB = findViewById(R.id.cbGolAB);
+        cbGolB = findViewById(R.id.cbGolB);
+        cbO = findViewById(R.id.cbGolO);
+
+        cbGolA.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(CompoundButton compoundButton, boolean b) {
+                if (b) {
+                    cbGolAB.setChecked(false);
+                    cbGolB.setChecked(false);
+                    cbO.setChecked(false);
+                    outputGol = "A";
+                }
+            }
+        });
+        cbGolB.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(CompoundButton compoundButton, boolean b) {
+                if (b) {
+                    cbGolA.setChecked(false);
+                    cbGolAB.setChecked(false);
+                    cbO.setChecked(false);
+                    outputGol = "B";
+                }
+            }
+        });
+        cbGolAB.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(CompoundButton compoundButton, boolean b) {
+                if (b) {
+                    cbGolA.setChecked(false);
+                    cbGolB.setChecked(false);
+                    cbO.setChecked(false);
+                    outputGol = "AB";
+                }
+            }
+        });
+        cbO.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(CompoundButton compoundButton, boolean b) {
+                if (b) {
+                    cbGolA.setChecked(false);
+                    cbGolAB.setChecked(false);
+                    cbGolB.setChecked(false);
+                    outputGol = "O";
+                }
+            }
+        });
+
+        //inisialisasi tgl lahir
+        dateFormat = new SimpleDateFormat("dd MMM yyyy");
+        etTanggalLahir.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                //pemanggilan fungsi date pcker
+                tampilkanDialogTanggal();
+            }
+        });
 
         //dapatkan akses data tersimpan user aktif
         mAuth = FirebaseAuth.getInstance();
@@ -103,6 +170,19 @@ public class crud_activity extends AppCompatActivity {
 
     }
 
-    public void rbClick(View view) {
+    //pemanggilan method date pcker dialog
+    public void tampilkanDialogTanggal() {
+        Calendar calendar = Calendar.getInstance();
+        datePickerDialog = new DatePickerDialog(this, new DatePickerDialog.OnDateSetListener() {
+            @Override
+            public void onDateSet(DatePicker datePicker, int year, int month, int dayOfMonth) {
+                Calendar newDate = Calendar.getInstance();
+                newDate.set(year, month, dayOfMonth);
+                etTanggalLahir.setText(dateFormat.format(newDate.getTime()));
+            }
+        },
+                calendar.get(Calendar.YEAR), calendar.get(Calendar.MONTH),
+                calendar.get(Calendar.DAY_OF_MONTH));
+        datePickerDialog.show();
     }
 }
