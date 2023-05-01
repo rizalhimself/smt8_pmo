@@ -18,15 +18,15 @@
     <string name="bt_masuk_login">Masuk</string>
     <string name="tv_daftar_login">Belum memiliki akun silakan daftar disini</string>
     <string-array name="list_fakultas">
-        <item name="Fakultas Ilmu Komputer" />
-        <item name="Fakultas Ilmu Komunikasi dan Bisnis Digital" />
+        <item>Fakultas Ilmu Komputer</item>
+        <item>"Fakultas Ilmu Komunikasi dan Bisnis Digital</item>
     </string-array>
     <string-array name="list_prodi">
-        <item name="Informatika" />
-        <item name="Sistem Informasi" />
-        <item name="Teknologi Informasi" />
-        <item name="Ilmu Komunikasi" />
-        <item name="Bisnis Digital" />
+        <item>Informatika"</item>
+        <item>Sistem Informasi</item>
+        <item>Teknologi Informasi</item>
+        <item>Ilmu Komunikasi</item>
+        <item>Bisnis Digital"</item>
     </string-array>
 
 

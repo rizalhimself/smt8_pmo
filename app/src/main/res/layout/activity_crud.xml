@@ -87,7 +87,7 @@
                         android:textSize="@dimen/uk_font_crud" />
 
                     <EditText
-                        android:id="@+id/etNim"
+                        android:id="@+id/etNimCrud"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:ems="10"
@@ -110,7 +110,7 @@
                         android:textSize="@dimen/uk_font_crud" />
 
                     <EditText
-                        android:id="@+id/etNama"
+                        android:id="@+id/etNamaCrud"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:ems="10"
@@ -132,10 +132,9 @@
                         android:textSize="@dimen/uk_font_crud" />
 
                     <Spinner
-                        android:id="@+id/fakultas"
+                        android:id="@+id/spFakultasCrud"
                         android:layout_width="match_parent"
-                        android:layout_height="match_parent"
-                        android:entries="@array/list_fakultas" />
+                        android:layout_height="40dp" />
                 </LinearLayout>
 
                 <LinearLayout
@@ -151,10 +150,9 @@
                         android:textSize="@dimen/uk_font_crud" />
 
                     <Spinner
-                        android:id="@+id/prodi"
+                        android:id="@+id/spProdiCrud"
                         android:layout_width="match_parent"
-                        android:layout_height="match_parent"
-                        android:entries="@array/list_prodi" />
+                        android:layout_height="40dp" />
                 </LinearLayout>
 
                 <LinearLayout
@@ -320,7 +318,7 @@
                         android:textSize="@dimen/uk_font_crud" />
 
                     <EditText
-                        android:id="@+id/etIPK"
+                        android:id="@+id/etIPKCrud"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:ems="10"
@@ -338,11 +336,55 @@
                     <TextView
                         android:layout_width="100dp"
                         android:layout_height="wrap_content"
+                        android:text="E-Mail"
+                        android:textSize="@dimen/uk_font_crud" />
+
+                    <EditText
+                        android:id="@+id/etEmailCrud"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:ems="10"
+                        android:hint="Masukkan Alamat Email"
+                        android:inputType="textEmailAddress"
+                        android:textSize="@dimen/uk_font_crud" />
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="5dp"
+                    android:orientation="horizontal">
+
+                    <TextView
+                        android:layout_width="100dp"
+                        android:layout_height="wrap_content"
+                        android:text="No HP"
+                        android:textSize="@dimen/uk_font_crud" />
+
+                    <EditText
+                        android:id="@+id/etNoHPCrud"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:ems="10"
+                        android:hint="Masukkan Homor Handphone"
+                        android:inputType="phone"
+                        android:textSize="@dimen/uk_font_crud" />
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="5dp"
+                    android:orientation="horizontal">
+
+                    <TextView
+                        android:layout_width="100dp"
+                        android:layout_height="wrap_content"
                         android:text="Alamat"
                         android:textSize="@dimen/uk_font_crud" />
 
                     <EditText
-                        android:id="@+id/etAlamat"
+                        android:id="@+id/etAlamatCrud"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:ems="10"
