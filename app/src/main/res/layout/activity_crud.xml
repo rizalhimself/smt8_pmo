@@ -235,7 +235,6 @@
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:checked="false"
-                            android:onClick="rbClick"
                             android:textSize="@dimen/uk_font_crud"
                             android:text="Pria" />
 
@@ -245,7 +244,6 @@
                             android:layout_height="wrap_content"
                             android:checked="false"
                             android:textSize="@dimen/uk_font_crud"
-                            android:onClick="rbClick"
                             android:text="Wanita" />
                     </RadioGroup>
 

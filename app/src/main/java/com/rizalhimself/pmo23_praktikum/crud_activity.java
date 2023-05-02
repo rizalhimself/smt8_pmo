@@ -18,6 +18,7 @@ import android.widget.ProgressBar;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
 import android.widget.Spinner;
+import android.widget.Toast;
 
 import androidx.activity.result.ActivityResult;
 import androidx.activity.result.ActivityResultCallback;
@@ -58,7 +59,7 @@ public class crud_activity extends AppCompatActivity {
     private ProgressBar progressBar;
     private StorageReference reference;
     private String uid;
-    private String outputGol;
+    private String outputGol, jenisKel;
     private FirebaseAuth mAuth;
 
     //method ambil gambar
@@ -89,6 +90,30 @@ public class crud_activity extends AppCompatActivity {
         etEmail = findViewById(R.id.etEmailCrud);
         etNoHp = findViewById(R.id.etNoHPCrud);
         etTanggalLahir = findViewById(R.id.etTglLahir);
+
+        //dapatkan akses data tersimpan user aktif
+        mAuth = FirebaseAuth.getInstance();
+        FirebaseDatabase firebaseDatabase = FirebaseDatabase.getInstance();
+        uid = mAuth.getUid();
+        databaseReference = firebaseDatabase.getReference();
+        DatabaseReference dbUser = databaseReference.child("RegistInfo").child(uid);
+        dbUser.addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot snapshot) {
+                String nmUser = snapshot.child("mhsNama").getValue(String.class);
+                String nimUser = snapshot.child("mhsNim").getValue(String.class);
+                String emUser = snapshot.child("mhsEmail").getValue(String.class);
+                etNama.setText(nmUser);
+                etNIM.setText(nimUser);
+                etEmail.setText(emUser);
+                etEmail.setEnabled(false);
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+
+            }
+        });
 
         //inisialisasi image view
         btPilihGambar = findViewById(R.id.btPilihGambar);
@@ -179,28 +204,18 @@ public class crud_activity extends AppCompatActivity {
             }
         });
 
-        //dapatkan akses data tersimpan user aktif
-        mAuth = FirebaseAuth.getInstance();
-        FirebaseDatabase firebaseDatabase = FirebaseDatabase.getInstance();
-        uid = mAuth.getUid();
-        databaseReference = firebaseDatabase.getReference();
-        DatabaseReference dbUser = databaseReference.child("RegistInfo").child(uid);
-        dbUser.addValueEventListener(new ValueEventListener() {
+        //inisialisasi radioGrup
+        radioGroup = findViewById(R.id.rgJenisKelamin);
+        radioGroup.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener() {
             @Override
-            public void onDataChange(@NonNull DataSnapshot snapshot) {
-                String nmUser = snapshot.child("mhsNama").getValue(String.class);
-                String nimUser = snapshot.child("mhsNim").getValue(String.class);
-                String emUser = snapshot.child("mhsEmail").getValue(String.class);
-                etNama.setText(nmUser);
-                etNIM.setText(nimUser);
-                etEmail.setText(emUser);
-            }
-
-            @Override
-            public void onCancelled(@NonNull DatabaseError error) {
-
+            public void onCheckedChanged(RadioGroup radioGroup, int i) {
+                jenisKel = ((RadioButton) findViewById(radioGroup.getCheckedRadioButtonId()))
+                        .getText().toString();
+                Toast.makeText(getApplicationContext(), jenisKel, Toast.LENGTH_SHORT).show();
             }
         });
+
+
 
 
     }
