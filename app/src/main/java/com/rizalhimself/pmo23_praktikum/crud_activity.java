@@ -1,5 +1,7 @@
 package com.rizalhimself.pmo23_praktikum;
 
+import static android.text.TextUtils.isEmpty;
+
 import android.app.Activity;
 import android.app.DatePickerDialog;
 import android.content.Intent;
@@ -53,14 +55,14 @@ public class crud_activity extends AppCompatActivity {
     private Spinner spFakultas, spProdi;
     private CheckBox cbGolA, cbGolB, cbGolAB, cbO;
     private ImageView ivUser;
-    private RadioButton rbPria, rbWanita;
     private RadioGroup radioGroup;
     private Button btPilihGambar, btSimpan;
     private ProgressBar progressBar;
     private StorageReference reference;
-    private String uid;
-    private String outputGol, jenisKel;
-    private FirebaseAuth mAuth;
+    private String getOutputGol;
+    private String getJenisKel;
+    private String getNIM, getNama, getFakultas, getProdi, getTglLahir,
+            getGambar, getIpk, getNoHp, getAlamat;
 
     //method ambil gambar
     private ActivityResultLauncher<Intent> galleryActivityResultLauncher =
@@ -71,7 +73,6 @@ public class crud_activity extends AppCompatActivity {
                             if (result.getResultCode() == Activity.RESULT_OK) {
                                 Intent data = result.getData();
                                 imageUrl = data.getData();
-
                                 ivUser.setImageURI(imageUrl);
                             }
                         }
@@ -92,9 +93,9 @@ public class crud_activity extends AppCompatActivity {
         etTanggalLahir = findViewById(R.id.etTglLahir);
 
         //dapatkan akses data tersimpan user aktif
-        mAuth = FirebaseAuth.getInstance();
+        FirebaseAuth mAuth = FirebaseAuth.getInstance();
         FirebaseDatabase firebaseDatabase = FirebaseDatabase.getInstance();
-        uid = mAuth.getUid();
+        String uid = mAuth.getUid();
         databaseReference = firebaseDatabase.getReference();
         DatabaseReference dbUser = databaseReference.child("RegistInfo").child(uid);
         dbUser.addValueEventListener(new ValueEventListener() {
@@ -145,7 +146,7 @@ public class crud_activity extends AppCompatActivity {
                     cbGolAB.setChecked(false);
                     cbGolB.setChecked(false);
                     cbO.setChecked(false);
-                    outputGol = "A";
+                    getOutputGol = "A";
                 }
             }
         });
@@ -156,7 +157,7 @@ public class crud_activity extends AppCompatActivity {
                     cbGolA.setChecked(false);
                     cbGolAB.setChecked(false);
                     cbO.setChecked(false);
-                    outputGol = "B";
+                    getOutputGol = "B";
                 }
             }
         });
@@ -167,7 +168,7 @@ public class crud_activity extends AppCompatActivity {
                     cbGolA.setChecked(false);
                     cbGolB.setChecked(false);
                     cbO.setChecked(false);
-                    outputGol = "AB";
+                    getOutputGol = "AB";
                 }
             }
         });
@@ -178,7 +179,7 @@ public class crud_activity extends AppCompatActivity {
                     cbGolA.setChecked(false);
                     cbGolAB.setChecked(false);
                     cbGolB.setChecked(false);
-                    outputGol = "O";
+                    getOutputGol = "O";
                 }
             }
         });
@@ -193,7 +194,7 @@ public class crud_activity extends AppCompatActivity {
             }
         });
 
-        //inisialisasi tombol pilih gambar
+        //inisialisasi fungsi tombol pilih gambar
         btPilihGambar.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -204,19 +205,34 @@ public class crud_activity extends AppCompatActivity {
             }
         });
 
-        //inisialisasi radioGrup
+        //inisialisasi fungsi radioGrup
         radioGroup = findViewById(R.id.rgJenisKelamin);
         radioGroup.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener() {
             @Override
             public void onCheckedChanged(RadioGroup radioGroup, int i) {
-                jenisKel = ((RadioButton) findViewById(radioGroup.getCheckedRadioButtonId()))
+                getJenisKel = ((RadioButton) findViewById(radioGroup.getCheckedRadioButtonId()))
                         .getText().toString();
-                Toast.makeText(getApplicationContext(), jenisKel, Toast.LENGTH_SHORT).show();
+                Toast.makeText(getApplicationContext(), getJenisKel, Toast.LENGTH_SHORT).show();
             }
         });
 
-
-
+        //inisialisasi fungsi tombol simpan
+        btSimpan = findViewById(R.id.btSimpan);
+        btSimpan.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                getNIM = etNIM.getText().toString();
+                getNama = etNama.getText().toString();
+                getFakultas = spFakultas.getSelectedItem().toString();
+                getProdi = spProdi.getSelectedItem().toString();
+                getTglLahir = etTanggalLahir.getText().toString();
+                getNoHp = etNoHp.getText().toString();
+                getIpk = etIPK.getText().toString();
+                getAlamat = etAlamat.getText().toString();
+                getGambar = ivUser.toString().trim();
+                checkUser();
+            }
+        });
 
     }
 
@@ -234,5 +250,19 @@ public class crud_activity extends AppCompatActivity {
                 calendar.get(Calendar.YEAR), calendar.get(Calendar.MONTH),
                 calendar.get(Calendar.DAY_OF_MONTH));
         datePickerDialog.show();
+    }
+
+    private void checkUser() {
+        if (isEmpty(getNIM) || isEmpty(getNama) || isEmpty(getProdi)
+                || isEmpty(getFakultas) || isEmpty(getAlamat) || isEmpty(getJenisKel)
+                || isEmpty(getOutputGol) || isEmpty(getJenisKel) || isEmpty(getTglLahir)
+                || isEmpty(getNoHp) || isEmpty(getIpk) || isEmpty(getAlamat) || imageUrl == null) {
+            Toast.makeText(getApplicationContext(), "Data Tidak Boleh Kosong",
+                    Toast.LENGTH_SHORT).show();
+        } else {
+            Toast.makeText(getApplicationContext(), "Data Siap Diupload",
+                    Toast.LENGTH_LONG).show();
+        }
+
     }
 }
