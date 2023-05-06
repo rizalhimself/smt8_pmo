@@ -7,7 +7,7 @@
     android:layout_height="match_parent"
     android:background="@color/purple_700"
     android:orientation="vertical"
-    tools:context=".MainActivity2">
+    tools:context=".SplashActivity">
 
     <LinearLayout
         android:layout_width="wrap_content"

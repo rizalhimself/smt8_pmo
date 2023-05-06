@@ -7,7 +7,10 @@ import android.view.WindowManager;
 
 import androidx.appcompat.app.AppCompatActivity;
 
-public class MainActivity2 extends AppCompatActivity {
+import com.google.firebase.auth.FirebaseAuth;
+
+public class SplashActivity extends AppCompatActivity {
+    private FirebaseAuth mAuth = FirebaseAuth.getInstance();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -20,12 +23,14 @@ public class MainActivity2 extends AppCompatActivity {
         new Handler().postDelayed(new Runnable() {
             @Override
             public void run() {
-                Intent i = new Intent(MainActivity2.this, LoginActivity.class);
-
-                startActivity(i);
-                finish();
+                if (mAuth.getCurrentUser() != null) {
+                    startActivity(new Intent(SplashActivity.this, MainActivity.class));
+                    finish();
+                } else {
+                    startActivity(new Intent(SplashActivity.this, LoginActivity.class));
+                    finish();
+                }
             }
         }, 2000);
-
     }
 }

@@ -6,6 +6,7 @@ import android.app.Activity;
 import android.app.DatePickerDialog;
 import android.content.Intent;
 import android.graphics.Bitmap;
+import android.graphics.drawable.BitmapDrawable;
 import android.net.Uri;
 import android.os.Bundle;
 import android.view.View;
@@ -29,6 +30,10 @@ import androidx.activity.result.contract.ActivityResultContracts;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.OnFailureListener;
+import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
@@ -36,21 +41,25 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 import com.google.firebase.storage.FirebaseStorage;
+import com.google.firebase.storage.OnProgressListener;
 import com.google.firebase.storage.StorageReference;
+import com.google.firebase.storage.UploadTask;
 
+import java.io.ByteArrayOutputStream;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 
 public class crud_activity extends AppCompatActivity {
-    private static final int REQUEST_CODE_CAMERA = 1;
-    private static final int REUEST_CODE_GALLERY = 2;
     public Uri imageUrl, uri;
     public Bitmap bitmap;
-    DatePickerDialog datePickerDialog;
-    SimpleDateFormat dateFormat;
-    StorageReference storageReference;
-    DatabaseReference databaseReference;
-    FirebaseStorage firebaseStorage;
+    private DatePickerDialog datePickerDialog;
+    private SimpleDateFormat dateFormat;
+    private FirebaseStorage firebaseStorage = FirebaseStorage.getInstance();
+    private StorageReference storageReference = firebaseStorage.getReference();
+    private FirebaseAuth mAuth = FirebaseAuth.getInstance();
+    private FirebaseDatabase firebaseDatabase = FirebaseDatabase.getInstance();
+    private DatabaseReference databaseReference = firebaseDatabase.getReference();
+    private String uid = mAuth.getUid();
     private EditText etNIM, etNama, etEmail, etNoHp, etIPK, etAlamat, etTanggalLahir;
     private Spinner spFakultas, spProdi;
     private CheckBox cbGolA, cbGolB, cbGolAB, cbO;
@@ -58,11 +67,12 @@ public class crud_activity extends AppCompatActivity {
     private RadioGroup radioGroup;
     private Button btPilihGambar, btSimpan;
     private ProgressBar progressBar;
-    private StorageReference reference;
+
     private String getOutputGol;
     private String getJenisKel;
     private String getNIM, getNama, getFakultas, getProdi, getTglLahir,
-            getGambar, getIpk, getNoHp, getAlamat;
+            getGambar, getIpk, getNoHp, getAlamat, getKey;
+
 
     //method ambil gambar
     private ActivityResultLauncher<Intent> galleryActivityResultLauncher =
@@ -83,6 +93,10 @@ public class crud_activity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_crud);
 
+        //inisialisasi progressbar
+        progressBar = findViewById(R.id.idProgress);
+        progressBar.setVisibility(View.GONE);
+
         //inisialisasi edittext
         etNama = findViewById(R.id.etNamaCrud);
         etNIM = findViewById(R.id.etNimCrud);
@@ -93,10 +107,6 @@ public class crud_activity extends AppCompatActivity {
         etTanggalLahir = findViewById(R.id.etTglLahir);
 
         //dapatkan akses data tersimpan user aktif
-        FirebaseAuth mAuth = FirebaseAuth.getInstance();
-        FirebaseDatabase firebaseDatabase = FirebaseDatabase.getInstance();
-        String uid = mAuth.getUid();
-        databaseReference = firebaseDatabase.getReference();
         DatabaseReference dbUser = databaseReference.child("RegistInfo").child(uid);
         dbUser.addValueEventListener(new ValueEventListener() {
             @Override
@@ -260,8 +270,58 @@ public class crud_activity extends AppCompatActivity {
             Toast.makeText(getApplicationContext(), "Data Tidak Boleh Kosong",
                     Toast.LENGTH_SHORT).show();
         } else {
-            Toast.makeText(getApplicationContext(), "Data Siap Diupload",
-                    Toast.LENGTH_LONG).show();
+
+            //konversi bitmap ivUser menjadi bytes
+            getKey = "1";
+            ivUser.setDrawingCacheEnabled(true);
+            ivUser.buildDrawingCache();
+            Bitmap bitmap = ((BitmapDrawable) ivUser.getDrawable()).getBitmap();
+            ByteArrayOutputStream stream = new ByteArrayOutputStream();
+
+            //kompresi bitmap jadi jpeg
+            bitmap.compress(Bitmap.CompressFormat.JPEG, 100, stream);
+            byte[] bytes = stream.toByteArray();
+
+            //lokasi penyimpanan firebasestorage
+            String namaFile = mAuth.getUid().toString() + ".jpg";
+            final String pathImage = "profilepic/" + namaFile;
+            UploadTask uploadTask = storageReference.child(pathImage).putBytes(bytes);
+            uploadTask.addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
+                @Override
+                public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
+                    taskSnapshot.getStorage().getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>() {
+                        @Override
+                        public void onSuccess(Uri uri) {
+                            databaseReference.child("RegistInfo")
+                                    .child(uid).push().setValue
+                                            (new MhsInfo(getNIM, getNama, getFakultas, getProdi, getJenisKel, getOutputGol
+                                                    , getTglLahir, getNoHp, getIpk, getAlamat, imageUrl.toString().trim(), getKey))
+                                    .addOnCompleteListener(new OnCompleteListener<Void>() {
+                                        @Override
+                                        public void onComplete(@NonNull Task<Void> task) {
+                                            progressBar.setVisibility(View.GONE);
+                                            Toast.makeText(getApplicationContext(), "Data Berhasil Diupload", Toast.LENGTH_SHORT).show();
+                                        }
+                                    });
+                        }
+                    });
+                }
+            }).addOnFailureListener(new OnFailureListener() {
+                @Override
+                public void onFailure(@NonNull Exception e) {
+                    progressBar.setVisibility(View.GONE);
+                    Toast.makeText(getApplicationContext(), "Update Data Gagal", Toast.LENGTH_SHORT).show();
+                }
+            }).addOnProgressListener(new OnProgressListener<UploadTask.TaskSnapshot>() {
+                @Override
+                public void onProgress(@NonNull UploadTask.TaskSnapshot snapshot) {
+                    progressBar.setVisibility(View.VISIBLE);
+                    double progress = (100.0 * snapshot.getBytesTransferred()) /
+                            snapshot.getTotalByteCount();
+                    progressBar.setProgress((int) progress);
+                }
+            });
+
         }
 
     }
