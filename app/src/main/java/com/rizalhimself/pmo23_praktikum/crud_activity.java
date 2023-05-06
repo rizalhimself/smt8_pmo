@@ -48,6 +48,8 @@ import com.google.firebase.storage.UploadTask;
 import java.io.ByteArrayOutputStream;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
+import java.util.HashMap;
+import java.util.Map;
 
 public class crud_activity extends AppCompatActivity {
     public Uri imageUrl, uri;
@@ -292,10 +294,22 @@ public class crud_activity extends AppCompatActivity {
                     taskSnapshot.getStorage().getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>() {
                         @Override
                         public void onSuccess(Uri uri) {
-                            databaseReference.child("RegistInfo")
-                                    .child(uid).push().setValue
-                                            (new MhsInfo(getNIM, getNama, getFakultas, getProdi, getJenisKel, getOutputGol
-                                                    , getTglLahir, getNoHp, getIpk, getAlamat, imageUrl.toString().trim(), getKey))
+                            DatabaseReference dbUpdate = databaseReference
+                                    .child("RegistInfo").child(uid);
+                            Map<String, Object> mhsInfo = new HashMap<>();
+                            mhsInfo.put("mhsNIM", getNIM);
+                            mhsInfo.put("mhsNama", getNama);
+                            mhsInfo.put("mhsFakultas", getFakultas);
+                            mhsInfo.put("mhsProdi", getProdi);
+                            mhsInfo.put("mhsJenisKel", getJenisKel);
+                            mhsInfo.put("mhsGolDarah", getOutputGol);
+                            mhsInfo.put("mhsTglLahir", getTglLahir);
+                            mhsInfo.put("mhsNoHp", getNoHp);
+                            mhsInfo.put("mhsIpk", getIpk);
+                            mhsInfo.put("mhsAlamat", getAlamat);
+                            mhsInfo.put("mhsImgUrl", imageUrl.toString().trim());
+                            mhsInfo.put("key", getKey);
+                            dbUpdate.updateChildren(mhsInfo)
                                     .addOnCompleteListener(new OnCompleteListener<Void>() {
                                         @Override
                                         public void onComplete(@NonNull Task<Void> task) {
