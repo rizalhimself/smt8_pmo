@@ -2,10 +2,14 @@ package com.rizalhimself.pmo23_praktikum;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.view.Gravity;
+import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.ImageView;
+import android.widget.PopupWindow;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
@@ -33,6 +37,9 @@ public class MainActivity extends AppCompatActivity {
     private AppBarConfiguration mAppBarConfiguration;
 
     private FirebaseAuth mAuth;
+
+    private String mhsNIM, mhsNama, mhsAlamat, mhsJenisKel, mhsGolDarah, mhsEmail, mhsNoHP,
+            mhsTglLahir, mhsProdi, mhsFakultas, mhsIvUrl;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -81,15 +88,59 @@ public class MainActivity extends AppCompatActivity {
         dbUser.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
-                String nmUser = Objects.requireNonNull(snapshot.child("mhsNama").getValue()).toString();
-                String emUser = Objects.requireNonNull(snapshot.child("mhsEmail").getValue()).toString();
-                tvNmUser.setText(nmUser);
-                tvEmUser.setText(emUser);
+                mhsNama = Objects.requireNonNull(snapshot.child("mhsNama").getValue()).toString();
+                mhsEmail = Objects.requireNonNull(snapshot.child("mhsEmail").getValue()).toString();
+                mhsNIM = Objects.requireNonNull(snapshot.child("mhsNIM").getValue()).toString();
+                mhsAlamat = Objects.requireNonNull(snapshot.child("mhsAlamat").getValue()).toString();
+                mhsFakultas = snapshot.child("mhsFakultas").getValue().toString();
+                mhsGolDarah = snapshot.child("mhsGolDarah").getValue().toString();
+                mhsJenisKel = snapshot.child("mhsJenisKel").getValue().toString();
+                mhsNoHP = snapshot.child("mhsNoHp").getValue().toString();
+                mhsProdi = snapshot.child("mhsProdi").getValue().toString();
+                mhsTglLahir = snapshot.child("mhsTglLahir").getValue().toString();
+
+                tvNmUser.setText(mhsNama);
+                tvEmUser.setText(mhsEmail);
             }
 
             @Override
             public void onCancelled(@NonNull DatabaseError error) {
 
+            }
+        });
+        profilePic.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                LayoutInflater inflater = (LayoutInflater)
+                        getSystemService(LAYOUT_INFLATER_SERVICE);
+                View popupView = inflater.inflate(R.layout.activity_profile, null);
+                ImageView ivProfile = popupView.findViewById(R.id.ivProfile);
+                Picasso.get().load("https://3.bp.blogspot.com/-JqX8r-P6nZg/U2PIEPC9P2I/AAAAAAAAApc/3LBxUwC2kX8/s118/").into(ivProfile);
+
+                ((TextView) popupView.findViewById(R.id.tvNamaProfile)).setText(mhsNama);
+                ((TextView) popupView.findViewById(R.id.tvEmailProfile)).setText(mhsEmail);
+                ((TextView) popupView.findViewById(R.id.tvNimProfile)).setText(mhsNIM);
+                ((TextView) popupView.findViewById(R.id.tvAlamatProfile)).setText(mhsAlamat);
+                ((TextView) popupView.findViewById(R.id.tvFakultasProfile)).setText(mhsFakultas);
+                ((TextView) popupView.findViewById(R.id.tvProdiProfile)).setText(mhsProdi);
+                ((TextView) popupView.findViewById(R.id.tvNoHPProfile)).setText(mhsNoHP);
+
+
+                final PopupWindow popupWindow = new PopupWindow(getApplicationContext());
+                popupWindow.setHeight(ViewGroup.LayoutParams.WRAP_CONTENT);
+                popupView.measure(View.MeasureSpec.UNSPECIFIED, View.MeasureSpec.UNSPECIFIED);
+                popupWindow.setWidth(popupView.getMeasuredWidth());
+                popupWindow.setContentView(popupView);
+
+
+                popupWindow.showAtLocation(view, Gravity.CENTER, 0, 0);
+
+                popupView.findViewById(R.id.btOkProfile).setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View view) {
+                        popupWindow.dismiss();
+                    }
+                });
             }
         });
     }
