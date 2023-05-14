@@ -138,8 +138,6 @@ public class MainActivity extends AppCompatActivity {
                 popupWindow.setWidth(popupView.getMeasuredWidth());
                 popupWindow.setContentView(popupView);
                 popupWindow.setAnimationStyle(R.style.Animation);
-
-
                 popupWindow.showAtLocation(view, Gravity.CENTER, 0, 0);
 
                 popupView.findViewById(R.id.btOkProfile).setOnClickListener(new View.OnClickListener() {

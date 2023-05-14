@@ -5,6 +5,7 @@ public class RegistInfo {
     private String mhsNama;
     private String mhsEmail;
 
+
     public RegistInfo() {
 
     }
