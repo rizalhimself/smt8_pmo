@@ -11,6 +11,7 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.PopupWindow;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
@@ -20,6 +21,7 @@ import androidx.navigation.Navigation;
 import androidx.navigation.ui.AppBarConfiguration;
 import androidx.navigation.ui.NavigationUI;
 
+import com.bumptech.glide.Glide;
 import com.google.android.material.navigation.NavigationView;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DataSnapshot;
@@ -28,9 +30,6 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 import com.rizalhimself.pmo23_praktikum.databinding.ActivityMainBinding;
-import com.squareup.picasso.Picasso;
-
-import java.util.Objects;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -39,7 +38,7 @@ public class MainActivity extends AppCompatActivity {
     private FirebaseAuth mAuth;
 
     private String mhsNIM, mhsNama, mhsAlamat, mhsJenisKel, mhsGolDarah, mhsEmail, mhsNoHP,
-            mhsTglLahir, mhsProdi, mhsFakultas, mhsIvUrl;
+            mhsTglLahir, mhsProdi, mhsFakultas, mhsIvUrl, mhsIPK;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -78,8 +77,6 @@ public class MainActivity extends AppCompatActivity {
         TextView tvEmUser = navHeaderView.findViewById(R.id.tvEmailUser);
         ImageView profilePic = navHeaderView.findViewById(R.id.ivAccount);
 
-        // Masukkan Gambar ke header
-        Picasso.get().load("https://3.bp.blogspot.com/-JqX8r-P6nZg/U2PIEPC9P2I/AAAAAAAAApc/3LBxUwC2kX8/s118/").into(profilePic);
 
         // Ambil data user dari database
         String uid = mAuth.getUid();
@@ -88,24 +85,29 @@ public class MainActivity extends AppCompatActivity {
         dbUser.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
-                mhsNama = Objects.requireNonNull(snapshot.child("mhsNama").getValue()).toString();
-                mhsEmail = Objects.requireNonNull(snapshot.child("mhsEmail").getValue()).toString();
-                mhsNIM = Objects.requireNonNull(snapshot.child("mhsNIM").getValue()).toString();
-                mhsAlamat = Objects.requireNonNull(snapshot.child("mhsAlamat").getValue()).toString();
-                mhsFakultas = snapshot.child("mhsFakultas").getValue().toString();
-                mhsGolDarah = snapshot.child("mhsGolDarah").getValue().toString();
-                mhsJenisKel = snapshot.child("mhsJenisKel").getValue().toString();
-                mhsNoHP = snapshot.child("mhsNoHp").getValue().toString();
-                mhsProdi = snapshot.child("mhsProdi").getValue().toString();
-                mhsTglLahir = snapshot.child("mhsTglLahir").getValue().toString();
+                mhsNama = snapshot.child("mhsNama").getValue(String.class);
+                mhsEmail = snapshot.child("mhsEmail").getValue(String.class);
+                mhsNIM = snapshot.child("mhsNim").getValue(String.class);
+                mhsAlamat = snapshot.child("mhsAlamat").getValue(String.class);
+                mhsFakultas = snapshot.child("mhsFakultas").getValue(String.class);
+                mhsGolDarah = snapshot.child("mhsGolDarah").getValue(String.class);
+                mhsJenisKel = snapshot.child("mhsJenisKel").getValue(String.class);
+                mhsNoHP = snapshot.child("mhsNoHp").getValue(String.class);
+                mhsProdi = snapshot.child("mhsProdi").getValue(String.class);
+                mhsTglLahir = snapshot.child("mhsTglLahir").getValue(String.class);
+                mhsIPK = snapshot.child("mhsIpk").getValue(String.class);
+                mhsIvUrl = snapshot.child("mhsImgUrl").getValue(String.class);
+
 
                 tvNmUser.setText(mhsNama);
                 tvEmUser.setText(mhsEmail);
+                //Picasso.get().load(mhsIvUrl).into(profilePic);
+                Glide.with(getApplicationContext()).load(mhsIvUrl).into(profilePic);
             }
 
             @Override
             public void onCancelled(@NonNull DatabaseError error) {
-
+                Toast.makeText(MainActivity.this, "Database error", Toast.LENGTH_SHORT).show();
             }
         });
         profilePic.setOnClickListener(new View.OnClickListener() {
@@ -115,7 +117,8 @@ public class MainActivity extends AppCompatActivity {
                         getSystemService(LAYOUT_INFLATER_SERVICE);
                 View popupView = inflater.inflate(R.layout.activity_profile, null);
                 ImageView ivProfile = popupView.findViewById(R.id.ivProfile);
-                Picasso.get().load("https://3.bp.blogspot.com/-JqX8r-P6nZg/U2PIEPC9P2I/AAAAAAAAApc/3LBxUwC2kX8/s118/").into(ivProfile);
+                //Picasso.get().load(mhsIvUrl).into(ivProfile);
+                Glide.with(getApplicationContext()).load(mhsIvUrl).into(ivProfile);
 
                 ((TextView) popupView.findViewById(R.id.tvNamaProfile)).setText(mhsNama);
                 ((TextView) popupView.findViewById(R.id.tvEmailProfile)).setText(mhsEmail);
@@ -124,13 +127,17 @@ public class MainActivity extends AppCompatActivity {
                 ((TextView) popupView.findViewById(R.id.tvFakultasProfile)).setText(mhsFakultas);
                 ((TextView) popupView.findViewById(R.id.tvProdiProfile)).setText(mhsProdi);
                 ((TextView) popupView.findViewById(R.id.tvNoHPProfile)).setText(mhsNoHP);
-
+                ((TextView) popupView.findViewById(R.id.tvGolDarahProfile)).setText(mhsGolDarah);
+                ((TextView) popupView.findViewById(R.id.tvJenisKelaminProfile)).setText(mhsJenisKel);
+                ((TextView) popupView.findViewById(R.id.tvIPKProfile)).setText(mhsIPK);
+                ((TextView) popupView.findViewById(R.id.tvTglLahirProfile)).setText(mhsTglLahir);
 
                 final PopupWindow popupWindow = new PopupWindow(getApplicationContext());
                 popupWindow.setHeight(ViewGroup.LayoutParams.WRAP_CONTENT);
                 popupView.measure(View.MeasureSpec.UNSPECIFIED, View.MeasureSpec.UNSPECIFIED);
                 popupWindow.setWidth(popupView.getMeasuredWidth());
                 popupWindow.setContentView(popupView);
+                popupWindow.setAnimationStyle(R.style.Animation);
 
 
                 popupWindow.showAtLocation(view, Gravity.CENTER, 0, 0);

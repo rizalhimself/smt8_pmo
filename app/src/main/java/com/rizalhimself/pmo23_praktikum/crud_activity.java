@@ -52,8 +52,7 @@ import java.util.HashMap;
 import java.util.Map;
 
 public class crud_activity extends AppCompatActivity {
-    public Uri imageUrl, uri;
-    public Bitmap bitmap;
+    public Uri imagePath;
     private DatePickerDialog datePickerDialog;
     private SimpleDateFormat dateFormat;
     private FirebaseStorage firebaseStorage = FirebaseStorage.getInstance();
@@ -84,8 +83,8 @@ public class crud_activity extends AppCompatActivity {
                         public void onActivityResult(ActivityResult result) {
                             if (result.getResultCode() == Activity.RESULT_OK) {
                                 Intent data = result.getData();
-                                imageUrl = data.getData();
-                                ivUser.setImageURI(imageUrl);
+                                imagePath = data.getData();
+                                ivUser.setImageURI(imagePath);
                             }
                         }
                     });
@@ -268,7 +267,7 @@ public class crud_activity extends AppCompatActivity {
         if (isEmpty(getNIM) || isEmpty(getNama) || isEmpty(getProdi)
                 || isEmpty(getFakultas) || isEmpty(getAlamat) || isEmpty(getJenisKel)
                 || isEmpty(getOutputGol) || isEmpty(getJenisKel) || isEmpty(getTglLahir)
-                || isEmpty(getNoHp) || isEmpty(getIpk) || isEmpty(getAlamat) || imageUrl == null) {
+                || isEmpty(getNoHp) || isEmpty(getIpk) || isEmpty(getAlamat) || imagePath == null) {
             Toast.makeText(getApplicationContext(), "Data Tidak Boleh Kosong",
                     Toast.LENGTH_SHORT).show();
         } else {
@@ -281,7 +280,7 @@ public class crud_activity extends AppCompatActivity {
             ByteArrayOutputStream stream = new ByteArrayOutputStream();
 
             //kompresi bitmap jadi jpeg
-            bitmap.compress(Bitmap.CompressFormat.JPEG, 100, stream);
+            bitmap.compress(Bitmap.CompressFormat.JPEG, 25, stream);
             byte[] bytes = stream.toByteArray();
 
             //lokasi penyimpanan firebasestorage
@@ -307,7 +306,7 @@ public class crud_activity extends AppCompatActivity {
                             mhsInfo.put("mhsNoHp", getNoHp);
                             mhsInfo.put("mhsIpk", getIpk);
                             mhsInfo.put("mhsAlamat", getAlamat);
-                            mhsInfo.put("mhsImgUrl", imageUrl.toString().trim());
+                            mhsInfo.put("mhsImgUrl", uri.toString());
                             mhsInfo.put("key", getKey);
                             dbUpdate.updateChildren(mhsInfo)
                                     .addOnCompleteListener(new OnCompleteListener<Void>() {
